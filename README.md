@@ -160,8 +160,6 @@ http://localhost:3333/polls/:id/votes
 ```
 A API verifica se esse usuário já votou anteriormente pelo Cookie, caso não tenha feito um voto, será incluso um novo, caso já tenha votado e seja a mesma opção do voto anterior, retorna Status 400, ou, se ele votar em uma nova opção, o voto anterior será excluído e esse novo será incluido.
 
-#
-
 É necessário passar como paramêtro o ID da enquete que está votando
 EX:
 ```json

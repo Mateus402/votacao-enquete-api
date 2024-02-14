@@ -126,3 +126,46 @@ O Prisma tem uma inferface integrada
 ```powershell
 npx prisma studio
 ```
+
+<br>
+<br>
+
+# Rotas
+
+Para Inserir uma nova enquete use a rota POST:
+```
+http://localhost:3333/polls
+```
+
+É nescessário incluir os paramêtros obrigatórios TITLE e OPTIONS:
+EX:
+```json
+{
+    "title" : "Qual o melhor Framework Node.JS?",
+    "options": ["Express", "Fastify", "NestJS", "HapiJS"]
+}
+```
+
+
+Para buscar uma enquete pelo ID use a rota GET:
+```
+http://localhost:3333/polls/:id
+```
+
+#
+
+Para incluir um voto, sendo ele unico para uma opção de cada enquete, utilize a rota POST:
+```
+http://localhost:3333/polls/:id/votes
+```
+A API verifica se esse usuário já votou anteriormente pelo Cookie, caso não tenha feito um voto, será incluso um novo, caso já tenha votado e seja a mesma opção do voto anterior, retorna Status 400, ou, se ele votar em uma nova opção, o voto anterior será excluído e esse novo será incluido.
+
+#
+
+É necessário passar como paramêtro o ID da enquete que está votando
+EX:
+```json
+{
+    "pollOptionId": "e1c36ac2-eee8-412b-a2d8-b91fb723a764"
+}
+```

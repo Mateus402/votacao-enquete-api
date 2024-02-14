@@ -2,6 +2,7 @@ import z from "zod"
 import { prisma } from "../../lib/prisma"
 import { FastifyInstance } from "fastify"
 import { randomUUID } from "node:crypto"
+import { redis } from "../../lib/redis"
 
 export async function voteOnPoll(app: FastifyInstance) {
     app.post('/polls/:pollId/votes', async (request, reply) => {
@@ -38,6 +39,7 @@ export async function voteOnPoll(app: FastifyInstance) {
                     }
                 })
                 
+                await redis.zincrby(pollId, -1, userPreviousVoteOnPoll.pollOptionId)
             } else if(userPreviousVoteOnPoll) {
                 return reply.status(400).send({ message: 'Você já votou nessa enquete'})
             }
@@ -62,7 +64,10 @@ export async function voteOnPoll(app: FastifyInstance) {
             }
         })
 
-        return reply.status(201).send()
+        // Comando para incrementar um ranking 
+        await redis.zincrby(pollId, 1, pollOptionId)
+
+        return reply.status(201).send({ message: 'Voto incluído com sucesso!' })
     
     })
 }

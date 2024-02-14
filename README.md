@@ -169,3 +169,10 @@ EX:
     "pollOptionId": "e1c36ac2-eee8-412b-a2d8-b91fb723a764"
 }
 ```
+
+#
+
+Rota WebScoket RealTime:
+```
+ws://localhost:3333/polls/2713d13e-b52c-47e6-ba92-c44705cdf02a/results
+```
